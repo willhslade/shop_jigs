@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin:0;padding:0}
+        html, body {height:100%;width:100%;overflow:hidden}
+        iframe {height:100%;width:100%}
+    </style>    
+</head>
+<body>
+    <script>
+        function reload() {
+            document.getElementById("ifr").src = "https://www.greaterfool.ca"
+            // var d = new Date();
+            // console.log(d.toLocaleTimeString());
+
+            // doesn't work - cross site scripting error
+            // var iframe = document.getElementById("ifr");
+            // var el = iframe.contentWindow.document.getElementsByTagName("h2")[0];
+            // var text = el.innerHTML;
+            // console.log(text);
+        }
+        setInterval(reload, 60000)
+    </script>
+    <iframe src="https://www.greaterfool.ca" id="ifr"></iframe>
+</body>
+</html>

@@ -1,0 +1,1 @@
+javascript:(()=>{document.head.appendChild(document.createElement("style")).innerHTML = ".entry p{line-height:normal;font-size:x-large;width: 800px;";document.getElementById("sidebar").hidden=true;})();

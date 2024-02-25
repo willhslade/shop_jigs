@@ -1,0 +1,9 @@
+.entry p {
+    line-height:normal;
+    font-size:x-large;
+    width: 800px;
+}
+
+#sidebar {
+    visibility: hidden;
+}

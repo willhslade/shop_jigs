@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Reformatter</title>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => { 
+			let submitButton = document.getElementById("submitButton");
+
+			submitButton.addEventListener("click", (e) => {
+				e.preventDefault();
+
+				let inputArea = document.getElementById("inputArea").value;
+				let lines = inputArea.split("\n");
+				for (i=0; i < lines.length; i++) {
+					if (i==lines.length-1){
+						lines[i] = '" ' + lines[i] + ' "';
+					} else {
+						lines[i] = '" ' + lines[i] + ' " & _ ';
+					}
+				}
+
+				let output = lines.join("\n");
+				// console.log(inputArea);
+				document.getElementById("outputArea").innerHTML  = output;
+			});
+		});
+	</script>
+</head>
+	
+<body>
+	<p>
+		<textarea id="inputArea" name="inputArea" rows="10" cols="160">SQL Input Area</textarea>
+		<br>
+		<input id="submitButton" type="submit" value="Submit">
+		<br>
+		<textarea id="outputArea" name="outputArea" rows="10" cols="160">SQL Output Area</textarea>
+	</p>
+</body>
+</html>

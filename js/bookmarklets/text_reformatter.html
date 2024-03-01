@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function Reformatter</title>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => { 
+			let submitButton = document.getElementById("submitButton");
+
+			submitButton.addEventListener("click", (e) => {
+				e.preventDefault();
+
+				let inputArea = document.getElementById("inputArea").value;
+				let numSpaces = " ".repeat(inputArea.search(/\(/) + 1);
+				// trim extra _ lines
+				inputArea = inputArea.replaceAll("_\n", "");
+
+				// trim double spaces
+				inputArea = inputArea.replace(/\s\s+/g, ' ');
+
+				// replace _ with newlines
+				inputArea = inputArea.replaceAll(", ", ", _ \n" + numSpaces);
+
+				// console.log(inputArea);
+				let lastParenthesis = inputArea.lastIndexOf(")") - 1;
+
+				if (lastParenthesis != inputArea.length) {
+					inputArea = inputArea.slice(0, lastParenthesis + 1) + ") _ \n" + numSpaces + inputArea.slice(lastParenthesis + 3);
+				}
+
+				document.getElementById("outputArea").innerHTML = inputArea;
+			});
+		});
+	</script>
+</head>
+	
+<body>
+	<p>
+		<textarea id="inputArea" name="inputArea" rows="10" cols="160">VBA Input Area</textarea>
+		<br>
+		<input id="submitButton" type="submit" value="Submit">
+		<br>
+		<textarea id="outputArea" name="outputArea" rows="10" cols="160">VBA Output Area</textarea>
+	</p>
+</body>
+</html>

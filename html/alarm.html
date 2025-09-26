@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-Minute Alarm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>10-Minute Alarm</h1>
+        <p>This page will sound an alarm every 10 minutes.</p>
+        <p>Please ensure your browser allows audio playback.</p>
+        <button id="startButton">Start Alarm</button>
+        <div id="status">Alarm not yet started.</div>
+    </div>
+
+    <audio id="alarmSound" src="C:\Users\DISYSIT\Downloads\soft_piano_alarm.mp3" preload="auto"></audio>
+
+    <script>
+        const alarmSound = document.getElementById('alarmSound');
+        const startButton = document.getElementById('startButton');
+        const statusDiv = document.getElementById('status');
+        let alarmInterval;
+        const tenMinutesInMs = 10 * 60 * 1000; // 10 minutes in milliseconds
+
+        function playAlarm() {
+            alarmSound.play().catch(error => {
+                console.error("Error playing sound:", error);
+                alert("Could not play alarm sound. Please check your browser's autoplay policies or enable sound for this site.");
+            });
+            console.log("Alarm sound played!");
+        }
+
+        function startAlarm() {
+            startButton.disabled = true;
+            statusDiv.textContent = "Alarm started! Will sound every 10 minutes.";
+            
+            // Play initial sound immediately
+            playAlarm();
+
+            alarmInterval = setInterval(() => {
+                playAlarm();
+            }, tenMinutesInMs); // Set to 10 minutes
+
+            console.log("Alarm interval set.");
+        }
+
+        startButton.addEventListener('click', startAlarm);
+
+        // Optional: Add a stop button if needed
+        // function stopAlarm() {
+        //     clearInterval(alarmInterval);
+        //     statusDiv.textContent = "Alarm stopped.";
+        //     startButton.disabled = false;
+        //     console.log("Alarm stopped.");
+        // }
+        // const stopButton = document.createElement('button');
+        // stopButton.textContent = "Stop Alarm";
+        // stopButton.addEventListener('click', stopAlarm);
+        // document.querySelector('.container').appendChild(stopButton);
+    </script>
+</body>
+</html>

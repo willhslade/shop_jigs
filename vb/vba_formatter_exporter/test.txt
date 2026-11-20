@@ -1,1 +1,27 @@
 https://www.youtube.com/watch?v=Ykh3LIPDyvA
+
+Run CheckActiveProjectSafety on your own project before the first real format. It formats your code in memory and never writes anything. That is the direct answer to your worry, because it tells you whether the formatter would break your code.
+
+How it works. The suite uses checks that need no hand-written expected output, so a failure points at the formatter and not at a wrong test. For each file under 7 option sets, it checks that:
+
+The code is unchanged apart from whitespace, compared token by token.
+A second pass changes nothing.
+The same output comes back whatever the input indentation, tabs, trailing spaces or line endings were.
+VBA’s limits hold: at most 24 continuations, 1023 characters per line, and procedures start and end at column 0.
+Every statement sits at the indent level an independent regex-based checker expects.
+
+How I checked the checks. The Node port runs the same checks over the corpus and over 4,075 lines of my own modules. It passes, and I confirmed the checks catch real faults by reintroducing 13 bugs; 12 were caught. The 13th is a harmless case (a line starting name:=…, which isn’t valid VBA).
+
+A gap I found: my first set of checks missed indentation drifting inside a procedure, because End Sub resets it. That is why the independent indent check exists. I’d have shipped that gap otherwise.
+Formatter changes: the corpus exposed two things the formatter got wrong, and I fixed both. Numeric line labels like 10 x = 1 now stay at column 0. A comment ending in _ now treats the next line as comment text.
+
+What’s unverified
+
+VBA test module: the Excel-side module hasn’t been compiled or run. I checked it for balanced blocks, valid regex patterns and undeclared variables only, so expect possibly one compile error on the first import. It needs Windows, because it uses VBScript regular expressions.
+Comment continuation: I believe VBA treats a comment ending in _ as continuing onto the next line, but I’m not certain. Check in your VBE by typing ' test _ and seeing whether the next line turns green. If it doesn’t, set COMMENTS_CONTINUE = False at the top of modFormatterCore.bas and rerun the tests.
+
+Next steps
+
+The suite is only as good as its corpus, so drop real modules from your projects into tests\corpus.
+Send me any failure from the report file at %TEMP%\VBAFormatterTestReport.txt.
+I can also hand over the Node port and checks if you want them. They’re a second implementation you’d have to keep in sync with the VBA, which is why I left them out.

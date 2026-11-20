@@ -1,0 +1,19 @@
+' Paste this into the ThisWorkbook code module of the add-in (not a standard module).
+
+Option Explicit
+
+Private Sub Workbook_Open()
+    InstallMenu
+End Sub
+
+Private Sub Workbook_AddinInstall()
+    InstallMenu
+End Sub
+
+Private Sub Workbook_AddinUninstall()
+    RemoveMenu
+End Sub
+
+Private Sub Workbook_BeforeClose(Cancel As Boolean)
+    RemoveMenu
+End Sub
